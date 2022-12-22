@@ -33,16 +33,16 @@ public class LoginServlet extends HttpServlet {
 
         if (user == null) {
             resp.getWriter().println("<b> User does not exist </b > <br> <a href = 'registration'> Registration </a> <br> <a href = 'login'>Try again</a>");
-            requestDispatcher.include(req, resp);
+        } else if (password.equals(user.getPassword()) && !user.is_active()) {
+            resp.getWriter().println("<b>User is not activated. Check your email to complete the registration</b>");
+            return;
+        } else if (password.equals(user.getPassword()) && user.is_active()) {
+            resp.getWriter().println("<b>Welcome from login servlet, </b>" + user.getName() + ", " + user.getEmail() + "<br>");
+            requestDispatcher = req.getRequestDispatcher("welcome");
         } else {
-            if (password.equals(user.getPassword())) {
-                resp.getWriter().println("<b>Welcome from login servlet, </b>" + user.getName() + ", " + user.getEmail() + "<br>");
-                requestDispatcher = req.getRequestDispatcher("welcome");
-                requestDispatcher.include(req, resp);
-            } else {
-                resp.getWriter().println("<b> Wrong email or password </b > <br> <a href = 'registration'> Registration </a> <br>");
-                requestDispatcher.include(req, resp);
-            }
+            resp.getWriter().println("<b> Wrong email or password </b > <br> <a href = 'registration'> Registration </a> <br>");
         }
+            requestDispatcher.include(req, resp);
     }
 }
+

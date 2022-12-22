@@ -11,7 +11,6 @@ public class UsersDAO extends AbstractDAO<User> {
 
     @Override
     public boolean insert(User user) {
-//        INSERT INTO `users`.`users` (`name`, `email`, `password`) VALUES ('Sara', 'Sara@gmail.com', '444');
         System.out.println("UsersDAO insert method");
         Connection connection = DBUtil.getConnection();
         String sql = "INSERT INTO users.users (name, email, password) VALUES (?, ?, ?)";
@@ -70,9 +69,13 @@ public class UsersDAO extends AbstractDAO<User> {
                 user.setId(resultSet.getInt(1));
                 user.setName(resultSet.getString("name"));
                 user.setPassword(resultSet.getString("password"));
+                user.set_active(resultSet.getBoolean("is_active"));
+                user.setCreated_ts(resultSet.getString("created_ts"));
+                user.setUpdated_ts(resultSet.getString("updated_ts"));
                 System.out.println("User is found " + user.toString());
             } else {
                 System.out.println("User is not exist " + email);
+                return null;
             }
 
         } catch (SQLException e) {
@@ -83,5 +86,31 @@ public class UsersDAO extends AbstractDAO<User> {
         }
 
         return user;
+    }
+
+    public boolean updateByEmail(String email) {
+        String sql = "UPDATE users.users\n SET is_active = 1, updated_ts = CURRENT_TIMESTAMP WHERE email = ?";
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql))
+        {
+            preparedStatement.setString(1, email);
+            int result = preparedStatement.executeUpdate();
+
+            if (result == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        
+        System.out.println(new UsersDAO().getByEmail("Stpn.belko@rambler.ru"));
     }
 }
