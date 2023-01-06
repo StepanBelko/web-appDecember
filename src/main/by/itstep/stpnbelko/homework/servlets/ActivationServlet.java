@@ -22,6 +22,30 @@ public class ActivationServlet extends HttpServlet {
         String email = req.getParameter("email");
         UsersDAO usersDAO = new UsersDAO();
 
+//        Новая логика с проверкой на активированность
+        if (usersDAO.getByEmail(email) != null) {
+            if (!usersDAO.isActive(email)) {
+                if (usersDAO.updateByEmail(email)) {
+                    resp.getWriter().println("<a>Mail " + req.getParameter("email")
+                            + " successfully activated.<br>"
+                            + "Now you can login<br></a>");
+                } else {
+                    System.out.println("Something wrong");
+                }
+            } else {
+                resp.getWriter().println("<a>Mail " + req.getParameter("email")
+                        + " is already activated.<br>"
+                        + "Please login<br></a>");
+            }
+        } else {
+                        resp.getWriter().println("<a>Mail <" + req.getParameter("email")
+                                + "> is not exist .<br>"
+                                + "<a href='registration'>Registration</a><br></a>");
+        }
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("activationPage.html");
+        requestDispatcher.include(req, resp);
+
+/*        Старая логика только с проверкой на существование и правильный апдейт
         if (usersDAO.getByEmail(email) != null && usersDAO.updateByEmail(email)) {
             resp.getWriter().println("<a>Mail " + req.getParameter("email")
                     + " successfully activated.<br>"
@@ -29,9 +53,10 @@ public class ActivationServlet extends HttpServlet {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("activationPage.html");
             requestDispatcher.include(req, resp);
         } else {
-            resp.getWriter().println("<a>Mail " + req.getParameter("email")
-                    + " was deleted from database .<br>"
+            resp.getWriter().println("<a>Mail <" + req.getParameter("email")
+                    + "> was deleted from database .<br>"
                     + "<a href='registration'>Registration</a><br></a>");
-        }
+
+        }*/
     }
 }

@@ -48,6 +48,9 @@ public class RegistrationServlet extends HttpServlet {
 
                 // send message
                 String content = IOUtils.readFileBuff("/Users/skynet/IdeaProjects/web-appDecember/src/main/webapp/templates/activate.html");
+
+
+                //Ссылка в кнопке активации. Должна быть одноразовая!!!!
                 content = content.replace("{*}", "http://localhost:8080/web-app/activate?email=" + email);
 
 

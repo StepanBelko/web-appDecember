@@ -11,7 +11,7 @@ public class DBUtil {
         try {
             Class.forName(DB_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            System.out.println("Connection -> " + connection);
+//            System.out.println("Connection -> " + connection);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -23,19 +23,19 @@ public class DBUtil {
         try {
             if (connection != null) {
                 connection.close();
-                System.out.println("Connection is closed -> " + connection);
+//                System.out.println("Connection is closed -> " + connection);
             }
             if (statement != null) {
                 statement.close();
-                System.out.println("Statement is closed -> " + statement);
+//                System.out.println("Statement is closed -> " + statement);
             }
             if (preparedStatement != null) {
                 preparedStatement.close();
-                System.out.println("Prepared statement is closed -> " + preparedStatement);
+//                System.out.println("Prepared statement is closed -> " + preparedStatement);
             }
             if (resultSet != null) {
                 resultSet.close();
-                System.out.println("ResultSet is closed -> " + resultSet);
+//                System.out.println("ResultSet is closed -> " + resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();

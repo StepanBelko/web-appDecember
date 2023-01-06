@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "HomeWork", urlPatterns = "/homeWorkServlets")
+@WebServlet(name = "HomeWork", urlPatterns = "/homeWork")
 public class HomeWorkServlet extends HttpServlet {
 
     @Override

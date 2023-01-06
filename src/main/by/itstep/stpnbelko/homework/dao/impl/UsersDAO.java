@@ -3,8 +3,12 @@ package by.itstep.stpnbelko.homework.dao.impl;
 import by.itstep.stpnbelko.homework.dao.AbstractDAO;
 import by.itstep.stpnbelko.homework.model.User;
 import by.itstep.stpnbelko.homework.util.DBUtil;
+import by.itstep.stpnbelko.homework.util.IOUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class UsersDAO extends AbstractDAO<User> {
@@ -50,7 +54,24 @@ public class UsersDAO extends AbstractDAO<User> {
 
     @Override
     public Set<User> getAll() {
-        return null;
+
+        String sql = "SELECT * FROM users.users ORDER BY created_ts";
+        Set userList = new HashSet<User>();
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User user = new UsersDAO().getByEmail(resultSet.getString("email"));
+                userList.add(user);
+            }
+//            System.out.println(userList.size());
+
+            return userList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     public User getByEmail(String email) {
@@ -92,8 +113,7 @@ public class UsersDAO extends AbstractDAO<User> {
         String sql = "UPDATE users.users\n SET is_active = 1, updated_ts = CURRENT_TIMESTAMP WHERE email = ?";
 
         try (Connection connection = DBUtil.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql))
-        {
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, email);
             int result = preparedStatement.executeUpdate();
 
@@ -109,8 +129,49 @@ public class UsersDAO extends AbstractDAO<User> {
         return false;
     }
 
+    public boolean isActive(String email) {
+        String sql = "SELECT is_active FROM users.users WHERE email = ?";
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getBoolean(1);
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean changePassWord(String email, String newPass) {
+        String sql = "UPDATE users.users\n SET password = " + newPass
+                + ", updated_ts = CURRENT_TIMESTAMP WHERE email = ?";
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            int result = preparedStatement.executeUpdate();
+            if (result == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
-        
-        System.out.println(new UsersDAO().getByEmail("Stpn.belko@rambler.ru"));
+        Set<User> userSet = new UsersDAO().getAll();
+
+        for (User user : userSet) {
+            System.out.println(user);
+        }
     }
 }

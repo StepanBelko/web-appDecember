@@ -17,12 +17,14 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("!!!!!!!!!Login servlet doGet");
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("loginPage.html");
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("!!!!!!!!!Login servlet doPost");
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("loginPage.html");
         resp.setContentType("text/html");
 
@@ -38,7 +40,9 @@ public class LoginServlet extends HttpServlet {
             return;
         } else if (password.equals(user.getPassword()) && user.is_active()) {
             resp.getWriter().println("<b>Welcome from login servlet, </b>" + user.getName() + ", " + user.getEmail() + "<br>");
-            requestDispatcher = req.getRequestDispatcher("welcome");
+            requestDispatcher = req.getRequestDispatcher("homePage");
+            requestDispatcher.forward(req, resp);
+            return;
         } else {
             resp.getWriter().println("<b> Wrong email or password </b > <br> <a href = 'registration'> Registration </a> <br>");
         }
