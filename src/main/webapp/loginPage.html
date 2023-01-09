@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link href="templates/css/login.css" rel="stylesheet" type="text/css">
+    <link href="templates/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
 
-<div class="MyForm">
+<div class="MyForm" style="height: 250px">
     <h1>Authorization</h1>
     <div class="inp">
         <form action='login' method="post">
-            <input class="log" type='email' id='email' name='email' placeholder="email" ><br>
-            <input class="pass" type='password' id='password' name='password'  placeholder="password">
+            <input class="inputUp" type='email' id='email' name='email' placeholder="email" >
+            <input class="inputDown" type='password' id='password' name='password'  placeholder="password">
             <div class="info">
                 <a href="resetPass">Forgot password?<a/>
             </div>
             <input class="btn" type='submit' value='Submit'>
+            <br>
         </form>
     </div>
 

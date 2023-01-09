@@ -3,7 +3,7 @@ body{
 }
 .MyForm{
     width:300px; /* ширина блока */
-    height: 225px; /* высота блока */
+    height: auto; /* высота блока */
     background: #fff; /* фон блока */
     border-radius: 10px; /* закругленные углы блока */
     margin: 10% auto; /* отступ сверху и выравнивание по середине */
@@ -22,16 +22,21 @@ body{
 .inp{
     padding:20px; /* отступы */
 }
-.log{
+.inputUp{
     border: 1px solid #dcdcdc; /* рамка */
     padding: 12px 10px; /* отступы текста */
-    width: 92%; /* ширина */
+    width: 240px; /* ширина */
     border-radius: 5px 5px 0 0; /* закругленные углы сверху */
 }
-.pass{
+.inputMiddle {
     border: 1px solid #dcdcdc; /* рамка */
     padding: 12px 10px; /* отступы текста */
-    width: 92%; /* ширина */
+    width: 240px; /* ширина */
+}
+.inputDown{
+    border: 1px solid #dcdcdc; /* рамка */
+    padding: 12px 10px; /* отступы текста */
+    width: 240px; /* ширина */
     border-radius: 0px 0px 5px 5px; /* закругленные углы снизу */
 }
 .btn{
@@ -43,7 +48,19 @@ body{
     margin: 10px; /* отступы */
     padding: 12px 20px; /* оступы для текста */
 }
+.btn2{
+    display: block;
+    background: #1dabb8; /* фон */
+    border-radius: 5px; /* закругленные углы */
+    color: #fff; /* цвет текста */
+    font-weight: bold; /* жирный текст */
+    margin-outside: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 12px 20px; /* оступы для текста */
+}
 .info {
+    display: block;
     width: 130px; /* ширина */
     float: left; /* выравнивание слева */
     padding-top: 20px; /* оступ сверху для текста */
