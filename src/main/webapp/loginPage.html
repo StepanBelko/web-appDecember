@@ -1,17 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="templates/css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form action='login' method="post">
-  <label for='email'>email</label><br>
-  <input type='email' id='email' name='email' value=""><br>
-  <label for='password'>password:</label><br>
-  <input type='password' id='password' name='password' value=""><br><br>
 
-  <input type='submit' value='Submit'>
-</form>
+
+<div class="MyForm">
+    <h1>Authorization</h1>
+    <div class="inp">
+        <form action='login' method="post">
+            <input class="log" type='email' id='email' name='email' placeholder="email" ><br>
+            <input class="pass" type='password' id='password' name='password'  placeholder="password">
+            <div class="info">
+                <a href="resetPass">Forgot password?<a/>
+            </div>
+            <input class="btn" type='submit' value='Submit'>
+        </form>
+    </div>
+
+</div>
+
 </body>
 </html>
