@@ -11,7 +11,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 import java.io.IOException;
+
+import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.*;
 
 @WebServlet(name = "registration", urlPatterns = "/registration")
 public class RegistrationServlet extends HttpServlet {
@@ -29,8 +32,8 @@ public class RegistrationServlet extends HttpServlet {
         resp.setContentType("text/html");
         String name = req.getParameter("name");
         String email = req.getParameter("email");
-        String pwd1 = req.getParameter("password1");
-        String pwd2 = req.getParameter("password2");
+        String pwd1 = encrypt(req.getParameter("password1"));
+        String pwd2 = encrypt(req.getParameter("password2"));
 
         User user = new UsersDAO().getByEmail(email);
         System.out.println(new UsersDAO().getByEmail(email));

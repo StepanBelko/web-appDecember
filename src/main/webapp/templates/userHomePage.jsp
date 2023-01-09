@@ -38,6 +38,10 @@
     <button>Reset Password</button>
 </form>
 
+<form action="logOut" target="_blank" method="get">
+    <button>LogOut</button>
+</form>
+
 
 </body>
 </html>
