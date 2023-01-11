@@ -4,14 +4,13 @@ import by.itstep.stpnbelko.homework.dao.impl.UsersDAO;
 import by.itstep.stpnbelko.homework.model.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "welcome", urlPatterns = "/welcome")
+
 public class WelcomeServlet extends HttpServlet {
 
     @Override

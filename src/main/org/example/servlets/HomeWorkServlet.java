@@ -1,4 +1,4 @@
-package by.itstep.stpnbelko.homework.servlets;
+package org.example.servlets;
 
 import by.itstep.stpnbelko.homework.logic.ServletLogic;
 import jakarta.servlet.RequestDispatcher;

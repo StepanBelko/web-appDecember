@@ -93,7 +93,7 @@ public class UsersDAO extends AbstractDAO<User> {
                 user.set_active(resultSet.getBoolean("is_active"));
                 user.setCreated_ts(resultSet.getString("created_ts"));
                 user.setUpdated_ts(resultSet.getString("updated_ts"));
-                System.out.println("User is found " + user.toString());
+//                System.out.println("User is found " + user.toString());
             } else {
                 System.out.println("User is not exist " + email);
                 return null;

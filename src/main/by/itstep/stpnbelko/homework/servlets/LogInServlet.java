@@ -1,4 +1,4 @@
-package org.example.servlets;
+package by.itstep.stpnbelko.homework.servlets;
 
 import by.itstep.stpnbelko.homework.dao.impl.UsersDAO;
 import by.itstep.stpnbelko.homework.model.User;
@@ -14,11 +14,9 @@ import jakarta.servlet.http.HttpSession;
 import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.*;
 
 import java.io.IOException;
-import java.util.Date;
 
 
-@WebServlet(name = "loginServlet", urlPatterns = "/login" )
-public class LoginServlet extends HttpServlet {
+public class LogInServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -38,7 +38,7 @@
     <button>Reset Password</button>
 </form>
 
-<form action="logOut" target="_blank" method="get">
+<form action="logout" target="_blank" method="get">
     <button>LogOut</button>
 </form>
 

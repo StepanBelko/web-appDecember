@@ -10,16 +10,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-@WebServlet(name = "LogOut", urlPatterns = "logOut")
+
+
 public class LogOutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        if (ServletUtils.getSessionUser(req) != null)
+        HttpSession session = req.getSession();
+        if (ServletUtils.getSessionUser(req) != null) {
+            System.out.println(session.getId() + " session is active");
+            session.invalidate();
+            System.out.println("INVALIDATE");
+        } else {
 
-
-
-
-//        HttpSession session = req.getSession();
-//        System.out.println(session.getId() + "session is active");
+        }
     }
 }

@@ -1,19 +1,15 @@
 package by.itstep.stpnbelko.homework.servlets;
 
 import by.itstep.stpnbelko.homework.dao.impl.UsersDAO;
-import by.itstep.stpnbelko.homework.model.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 
-@WebServlet(name = "activationServlet", urlPatterns = "/activate")
 public class ActivationServlet extends HttpServlet {
 
     @Override
