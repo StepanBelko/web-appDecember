@@ -1,5 +1,8 @@
 package by.itstep.stpnbelko.homework.util;
 
+import by.itstep.stpnbelko.homework.dao.impl.UsersDAO;
+import by.itstep.stpnbelko.homework.model.User;
+
 import java.io.*;
 import java.util.Date;
 
@@ -102,9 +105,9 @@ public class IOUtils {
     }
 
     public static void main(String[] args) {
-        // String path = "D:/test/example.txt";
-
-        // writeFile(path, "Hello IO.");
+//         String path = "D:/test/example.txt";
+//
+//         writeFile(path, "Hello IO.");
 //        writeFile(path, "EXTRA TEXT.", true);
 //        readFile(path);
 //
@@ -126,39 +129,38 @@ public class IOUtils {
 //        str = str.substring(str.indexOf(word) + word.length() + 2);
 //
 //        System.out.println(str);
-
-
-        printFolderStatInFile("D:\\AdventuresInMinecraft", "D:/test/log_" + new Date()
-                .toString().replace(":", "_") + ".txt");
-
-
+//
+//
+//        printFolderStatInFile("D:\\AdventuresInMinecraft", "D:/test/log_" + new Date()
+//                .toString().replace(":", "_") + ".txt");
+//
     }
 
-    public static void printFolderStatInFile(String folderPath, String log){
-        File folder = new File(folderPath);
-
-        if(!folder.isDirectory()){
-            writeFile(log,folderPath + " is NOT a Directory", true);
-            System.out.println(folderPath + " is NOT a Directory");
-            //return ;
-        } else {
-            writeFile(log,"Folder '" + folder.getName() + "' -> ", true);
-            System.out.println("Folder '" + folder.getName() + "' -> ");
-            File[] files = folder.listFiles();
-            for (File f: files) {
-                if(f.isFile()){
-                    writeFile(log,"File '" +f.getName() + "': ", true);
-                    System.out.println("File '" +f.getName() + "': ");
-                    writeFile(log, readFile(f.getPath()), true);
-
-                } else if(f.isDirectory()) {
-                    printFolderStatInFile(f.getPath(), log);
-                }
-            }
-        }
-
-
-    }
+//    public static void printFolderStatInFile(String folderPath, String log){
+//        File folder = new File(folderPath);
+//
+//        if(!folder.isDirectory()){
+//            writeFile(log,folderPath + " is NOT a Directory", true);
+//            System.out.println(folderPath + " is NOT a Directory");
+//            //return ;
+//        } else {
+//            writeFile(log,"Folder '" + folder.getName() + "' -> ", true);
+//            System.out.println("Folder '" + folder.getName() + "' -> ");
+//            File[] files = folder.listFiles();
+//            for (File f: files) {
+//                if(f.isFile()){
+//                    writeFile(log,"File '" +f.getName() + "': ", true);
+//                    System.out.println("File '" +f.getName() + "': ");
+//                    writeFile(log, readFile(f.getPath()), true);
+//
+//                } else if(f.isDirectory()) {
+//                    printFolderStatInFile(f.getPath(), log);
+//                }
+//            }
+//        }
+//
+//
+//    }
 
 }
 

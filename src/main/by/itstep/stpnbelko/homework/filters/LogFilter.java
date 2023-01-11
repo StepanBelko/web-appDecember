@@ -1,5 +1,6 @@
 package by.itstep.stpnbelko.homework.filters;
 
+import by.itstep.stpnbelko.homework.model.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
@@ -37,6 +38,7 @@ public class LogFilter extends HttpFilter {
 
         System.out.println(String.format(PRINT_PATTERN, new Date().toString(), "INFO", Thread.currentThread().getName(), sessionId, servletPath, uri, url));
 
+        System.out.println("USER IN FILTER : " + httpReq.getSession().getAttribute("user"));
         chain.doFilter(req, res);
 
     }

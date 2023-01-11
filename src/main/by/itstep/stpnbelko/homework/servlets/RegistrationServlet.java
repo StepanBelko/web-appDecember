@@ -1,4 +1,4 @@
-package org.example.servlets;
+package by.itstep.stpnbelko.homework.servlets;
 
 import by.itstep.stpnbelko.homework.dao.impl.UsersDAO;
 import by.itstep.stpnbelko.homework.model.User;
@@ -16,7 +16,7 @@ import java.io.IOException;
 
 import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.*;
 
-@WebServlet(name = "registration", urlPatterns = "/registration")
+
 public class RegistrationServlet extends HttpServlet {
     static int i = 0;
 

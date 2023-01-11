@@ -5,15 +5,14 @@ import by.itstep.stpnbelko.homework.model.User;
 import by.itstep.stpnbelko.homework.util.ServletUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.*;
-
 import java.io.IOException;
+
+import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.encrypt;
 
 
 public class LogInServlet extends HttpServlet {
@@ -37,10 +36,9 @@ public class LogInServlet extends HttpServlet {
         User user = new UsersDAO().getByEmail(email);
 
         if (user == null) {
-            resp.getWriter().println("<b> User does not exist </b > <br> <a href = 'registration'> Registration </a> <br> <a href = 'login'>Try again</a>");
+            resp.getWriter().println("<b> User does not exist </b >");
         } else if (password.equals(user.getPassword()) && !user.is_active()) {
             resp.getWriter().println("<b>User is not activated. Check your email to complete the registration</b>");
-            return;
         } else if (password.equals(user.getPassword()) && user.is_active()) {
 
             HttpSession session = req.getSession();
@@ -48,12 +46,12 @@ public class LogInServlet extends HttpServlet {
             ServletUtils.saveSessionUser(req, user);
 
 
-            resp.getWriter().println("<b>Welcome from login servlet, </b>" + user.getName() + ", " + user.getEmail() + "<br>");
+//            resp.getWriter().println("<b>Welcome from login servlet, </b>" + user.getName() + ", " + user.getEmail() + "<br>");
             requestDispatcher = req.getRequestDispatcher("homePage");
             requestDispatcher.forward(req, resp);
             return;
         } else {
-            resp.getWriter().println("<b> Wrong email or password </b > <br> <a href = 'registration'> Registration </a> <br>");
+            resp.getWriter().println("<b> Wrong email or password </b >");
         }
             requestDispatcher.include(req, resp);
     }

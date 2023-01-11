@@ -6,10 +6,7 @@ import by.itstep.stpnbelko.homework.util.DBUtil;
 import by.itstep.stpnbelko.homework.util.IOUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class UsersDAO extends AbstractDAO<User> {
 
@@ -56,7 +53,7 @@ public class UsersDAO extends AbstractDAO<User> {
     public Set<User> getAll() {
 
         String sql = "SELECT * FROM users.users ORDER BY created_ts";
-        Set userList = new HashSet<User>();
+        Set userList = new LinkedHashSet<User>();
 
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -90,6 +87,7 @@ public class UsersDAO extends AbstractDAO<User> {
                 user.setId(resultSet.getInt(1));
                 user.setName(resultSet.getString("name"));
                 user.setPassword(resultSet.getString("password"));
+                user.setOffice_id(resultSet.getInt("office_id"));
                 user.set_active(resultSet.getBoolean("is_active"));
                 user.setCreated_ts(resultSet.getString("created_ts"));
                 user.setUpdated_ts(resultSet.getString("updated_ts"));
@@ -166,6 +164,8 @@ public class UsersDAO extends AbstractDAO<User> {
         }
         return false;
     }
+
+    
 
     public static void main(String[] args) {
         Set<User> userSet = new UsersDAO().getAll();
