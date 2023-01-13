@@ -16,6 +16,6 @@ public class User {
     Timestamp created_ts;
     Timestamp updated_ts;
 
-//    private Set<Role> role;
+    private Set<Role> role;
 
 }

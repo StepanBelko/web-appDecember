@@ -45,7 +45,7 @@ public class UsersDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public User getById(User user) {
+    public User getById(int id) {
         return null;
     }
 
@@ -61,7 +61,7 @@ public class UsersDAO extends AbstractDAO<User> {
 
             while (resultSet.next()) {
                 User user = new User();
-                user.setId(Integer.parseInt(resultSet.getString("id")));
+                user.setId(resultSet.getInt("id"));
                 user.setName(resultSet.getString("name"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
@@ -79,13 +79,14 @@ public class UsersDAO extends AbstractDAO<User> {
     }
 
     public User getByEmail(String email) {
-        String sql = "SELECT * FROM users.users WHERE email = '" + email + "'";
+        String sql = "SELECT * FROM users.users WHERE email = ?";
         User user = null;
 
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ResultSet resultSet = preparedStatement.executeQuery(sql);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 user = new User();
@@ -109,7 +110,7 @@ public class UsersDAO extends AbstractDAO<User> {
     }
 
     public boolean updateByEmail(String email) {
-        String sql = "UPDATE users.users\n SET is_active = 1, updated_ts = CURRENT_TIMESTAMP WHERE email = ?";
+        String sql = "UPDATE users.users SET is_active = 1, updated_ts = CURRENT_TIMESTAMP WHERE email = ?";
 
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -168,10 +169,6 @@ public class UsersDAO extends AbstractDAO<User> {
 
 
     public static void main(String[] args) {
-        Set<User> userSet = new UsersDAO().getAll();
-
-        for (User user : userSet) {
-            System.out.println(user);
-        }
+        System.out.println(new UsersDAO().getByEmail("Stpn.belko@rambler.ru"));
     }
 }
