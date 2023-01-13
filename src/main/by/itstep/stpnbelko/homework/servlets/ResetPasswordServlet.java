@@ -15,14 +15,14 @@ public class ResetPasswordServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("!!!!!!!!!Reset servlet doGet");
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("resetPage.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/resetPage.jsp");
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("!!!!!!!!!Reset servlet doPost");
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/resetPage.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/resetPage.jsp");
         resp.setContentType("text/html");
 
         String email = req.getParameter("email");

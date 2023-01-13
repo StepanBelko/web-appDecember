@@ -6,32 +6,6 @@
     int n = 3;
 %>
 
-<%-- #2 Scriptlet--%>
-<%
-    System.out.println("Scriptlet" + serverDate);
-
-    for (int i = 0; i < 5; i++) {%>
-<h4><%=i%>
-</h4>
-<%}%>
-
-
-<html>
-<body>
-<h2>Start page</h2>
-
-
-<% if (n == 5) {%>
-<button>
-    Hi, <%=n%>
-</button>
-<%} else {%>
-<a>
-    No button. n = <%=n%>
-</a>
-<%}%>
-
-
 <%-- #3 Expression--%>
 <h3><%=serverDate%>
 </h3>

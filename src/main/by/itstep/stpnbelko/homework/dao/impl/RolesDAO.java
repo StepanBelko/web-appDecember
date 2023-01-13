@@ -93,7 +93,7 @@ public class RolesDAO extends AbstractDAO<Role> {
 
             while (resultSet.next()) {
                 Role role = new Role();
-                role.setId(Integer.parseInt(resultSet.getString("id")));
+                role.setId(resultSet.getInt("id"));
                 role.setName(resultSet.getString("name"));
                 role.setDescription(resultSet.getString("descr"));
                 usersRoles.add(role);
@@ -102,7 +102,6 @@ public class RolesDAO extends AbstractDAO<Role> {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-
 
         return usersRoles;
     }
