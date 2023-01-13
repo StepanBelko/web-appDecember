@@ -14,11 +14,12 @@
 //    String email = request.getParameter("email");
 //    User user = new UsersDAO().getByEmail(email);
 
-    Set<User> userSet = new UsersDAO().getAll();
-
     User user = (User) session.getAttribute("user");
     String email = user.getEmail();
     String name = user.getName();
+
+    Set<User> userSet = new UsersDAO().getAll();
+
 
     StringBuilder userTable = new StringBuilder();
 
@@ -52,6 +53,8 @@
 </head>
 <body>
 <h1><%=name%>  HomePage</h1>
+Session : ID = <%=session.getId()%>, servlet_context = <%=session.getServletContext()%><br>
+User in session : <%=session.getAttribute("user")%>    <br>
 <br>
 <%--<table>--%>
 <%--    <caption>Users database</caption>--%>
@@ -65,7 +68,7 @@
 <%--        <th>Created time</th>--%>
 <%--        <th>Last update</th>--%>
 <%--    </tr>--%>
-    <%=userTable%>
+<%=userTable%>
 <%--</table>--%>
 <br>
 <form action="resetPass" target="_self" method="get">

@@ -51,57 +51,58 @@ public class UsersDAO extends AbstractDAO<User> {
 
     @Override
     public Set<User> getAll() {
-
         String sql = "SELECT * FROM users.users ORDER BY created_ts";
         Set userList = new LinkedHashSet<User>();
 
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
-                User user = new UsersDAO().getByEmail(resultSet.getString("email"));
+                User user = new User();
+                user.setId(Integer.parseInt(resultSet.getString("id")));
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setOffice_id(resultSet.getInt("office_id"));
+                user.set_active(resultSet.getBoolean("is_active"));
+                user.setCreated_ts(resultSet.getTimestamp("created_ts"));
+                user.setUpdated_ts(resultSet.getTimestamp("updated_ts"));
                 userList.add(user);
             }
-//            System.out.println(userList.size());
-
-            return userList;
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+        return userList;
     }
 
     public User getByEmail(String email) {
-        Connection connection = DBUtil.getConnection();
         String sql = "SELECT * FROM users.users WHERE email = '" + email + "'";
-        Statement statement = null;
-        ResultSet resultSet = null;
         User user = null;
-        try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery(sql);
 
             if (resultSet.next()) {
                 user = new User();
-                user.setEmail(email);
-                user.setId(resultSet.getInt(1));
+                user.setId(Integer.parseInt(resultSet.getString("id")));
                 user.setName(resultSet.getString("name"));
+                user.setEmail(email);
                 user.setPassword(resultSet.getString("password"));
                 user.setOffice_id(resultSet.getInt("office_id"));
                 user.set_active(resultSet.getBoolean("is_active"));
-                user.setCreated_ts(resultSet.getString("created_ts"));
-                user.setUpdated_ts(resultSet.getString("updated_ts"));
-//                System.out.println("User is found " + user.toString());
+                user.setCreated_ts(resultSet.getTimestamp("created_ts"));
+                user.setUpdated_ts(resultSet.getTimestamp("updated_ts"));
             } else {
-                System.out.println("User is not exist " + email);
-                return null;
+                System.out.println("User does not exist " + email);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
-        } finally {
-            DBUtil.release(connection, statement, null, resultSet);
         }
 
         return user;
@@ -165,7 +166,6 @@ public class UsersDAO extends AbstractDAO<User> {
         return false;
     }
 
-    
 
     public static void main(String[] args) {
         Set<User> userSet = new UsersDAO().getAll();
