@@ -63,6 +63,8 @@
 <h1><%=name%>  HomePage</h1>
 Session : ID = <%=session.getId()%>, servlet_context = <%=session.getServletContext()%><br>
 User in session : <%=session.getAttribute("user")%>    <br>
+Session user roles : <%=sessionUser.getRole().isEmpty()%>        <br>
+Session user roles size: <%=sessionUser.getRole().size()%>        <br>
 <br>
 <table class="table">
     <caption>Users database</caption>
@@ -76,6 +78,7 @@ User in session : <%=session.getAttribute("user")%>    <br>
         <th>Created time</th>
         <th>Last update</th>
         <th>Roles</th>
+        <th>Action</th>
     </tr>
 
     <%for (User user : userSet) {%>
@@ -94,6 +97,25 @@ User in session : <%=session.getAttribute("user")%>    <br>
                 <%}%>
             <%} else {%>
             <a>NONE</a>
+            <%}%>
+        </td>
+        <td >
+            <% if (!sessionUser.getRole().isEmpty()) {%>
+            <%for (Role role : sessionUser.getRole()) {%>
+            <%if (role.getId() <=2) {%>
+            <form action="update" style="display: inline">
+                <button>Update</button>
+            </form>
+            <%}%>
+            <%if (role.getId() <=1) {%>
+            <form action="delete" style="display: inline" method="get">
+                <input name="deleteUserId" value="<%=user.getId()%>" hidden>
+                <input class="btn" type='submit' value='DELETE'>
+            </form>
+            <%}%>
+            <%}%>
+            <%} else {%>
+            <a>NO ACTION FOR CURRENT USER</a>
             <%}%>
         </td>
     </tr>

@@ -4,7 +4,6 @@ import by.itstep.stpnbelko.homework.dao.AbstractDAO;
 import by.itstep.stpnbelko.homework.model.Role;
 import by.itstep.stpnbelko.homework.model.User;
 import by.itstep.stpnbelko.homework.util.DBUtil;
-import by.itstep.stpnbelko.homework.util.IOUtils;
 
 import java.sql.*;
 import java.util.*;
@@ -41,13 +40,77 @@ public class UsersDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public boolean delete(User user) {
+    public boolean delete(int id) {
+        String sql = "DELETE FROM `users`.`users` WHERE (`id` = ?)";
+
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, id);
+            if (preparedStatement.executeUpdate() == 1)
+                return true;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return false;
     }
 
     @Override
     public User getById(int id) {
-        return null;
+        String sql = "SELECT * FROM users.users WHERE id = ?";
+        String getRolesSql = "SELECT * FROM roles WHERE roles.id IN (SELECT role_id FROM users_roles WHERE user_id = ?)";
+        User user = null;
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             PreparedStatement preparedStatementForGetRole = connection.prepareStatement(getRolesSql)) {
+
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User();
+                user.setId(id);
+                user.setName(resultSet.getString("name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setOffice_id(resultSet.getInt("office_id"));
+                user.set_active(resultSet.getBoolean("is_active"));
+                user.setCreated_ts(resultSet.getTimestamp("created_ts"));
+                user.setUpdated_ts(resultSet.getTimestamp("updated_ts"));
+
+//                Вариант 1 заполнения ролей
+//                в этом случае мы создаём новый connection, новый RolesDAO()...
+//                итд со всеми вытекающими последствиями:
+
+//                user.setRole(new RolesDAO().getUserRoles(user));
+
+//                Вариант 2. В этом же connection. new RolesDAO() не нужен:
+                preparedStatementForGetRole.setInt(1, id);
+                ResultSet rolesResultSet = preparedStatementForGetRole.executeQuery();
+                Set<Role> usersRoles = new LinkedHashSet<>();
+
+                while (rolesResultSet.next()) {
+                    Role role = new Role();
+                    role.setId(rolesResultSet.getInt("id"));
+                    role.setName(rolesResultSet.getString("name"));
+                    role.setDescription(rolesResultSet.getString("descr"));
+                    usersRoles.add(role);
+                }
+                user.setRole(usersRoles);
+
+
+            } else {
+                System.out.println("User does not exist. id =  " + id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+        return user;
     }
 
     @Override
@@ -82,10 +145,8 @@ public class UsersDAO extends AbstractDAO<User> {
 
     public User getByEmail(String email) {
         String sql = "SELECT * FROM users.users WHERE email = ?";
-        User user = null;
-
         String getRolesSql = "SELECT * FROM roles WHERE roles.id IN (SELECT role_id FROM users_roles WHERE user_id = ?)";
-
+        User user = null;
 
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -107,12 +168,12 @@ public class UsersDAO extends AbstractDAO<User> {
 
 //                Вариант 1 заполнения ролей
 //                в этом случае мы создаём новый connection, новый RolesDAO()...
-//                итд со всеми вытекающими последствиями
+//                итд со всеми вытекающими последствиями:
 
 //                user.setRole(new RolesDAO().getUserRoles(user));
 
-//                Вариант 2. В этом же connection. new RolesDAO() не нужен.
-                preparedStatementForGetRole.setString(1, getRolesSql);
+//                Вариант 2. В этом же connection. new RolesDAO() не нужен:
+                preparedStatementForGetRole.setInt(1, user.getId());
                 ResultSet rolesResultSet = preparedStatementForGetRole.executeQuery();
                 Set<Role> usersRoles = new LinkedHashSet<>();
 
@@ -197,6 +258,6 @@ public class UsersDAO extends AbstractDAO<User> {
 
 
     public static void main(String[] args) {
-        System.out.println(new UsersDAO().getAll());
+        System.out.println(new UsersDAO().getByEmail("Stpn.belko@rambler.ru"));
     }
 }

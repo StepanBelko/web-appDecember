@@ -21,6 +21,16 @@
 
 
     <servlet>
+        <servlet-name>DeleteServlet</servlet-name>
+        <servlet-class>by.itstep.stpnbelko.homework.servlets.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteServlet</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
         <servlet-name>HomePageServlet</servlet-name>
         <servlet-class>by.itstep.stpnbelko.homework.servlets.HomePageServlet</servlet-class>
     </servlet>

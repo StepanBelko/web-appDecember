@@ -5,7 +5,6 @@ import by.itstep.stpnbelko.homework.model.Role;
 import by.itstep.stpnbelko.homework.model.User;
 import by.itstep.stpnbelko.homework.util.DBUtil;
 
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +25,7 @@ public class RolesDAO extends AbstractDAO<Role> {
     }
 
     @Override
-    public boolean delete(Role o) {
+    public boolean delete(int id) {
         return false;
     }
 

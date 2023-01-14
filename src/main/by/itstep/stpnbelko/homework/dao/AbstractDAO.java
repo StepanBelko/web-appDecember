@@ -1,7 +1,5 @@
 package by.itstep.stpnbelko.homework.dao;
 
-import by.itstep.stpnbelko.homework.model.Role;
-
 import java.util.Set;
 
 public abstract class AbstractDAO<T> {
@@ -10,7 +8,7 @@ public abstract class AbstractDAO<T> {
 
     public abstract boolean update(T t);
 
-    public abstract boolean delete(T t);
+    public abstract boolean delete(int id);
 
     public abstract T getById(int id);
 

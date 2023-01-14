@@ -25,7 +25,7 @@ public class OfficesDAO extends AbstractDAO<Office> {
     }
 
     @Override
-    public boolean delete(Office office) {
+    public boolean delete(int id) {
         return false;
     }
 
