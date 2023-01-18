@@ -17,6 +17,6 @@ public class User {
     Timestamp updated_ts;
 
     private Set<Role> role;
-//    private Office office;
+    private Office office;
 
 }

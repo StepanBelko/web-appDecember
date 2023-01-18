@@ -14,6 +14,8 @@
 <a href='test2'> test2 </a> <br>
 <a href='homeWorkServlets'> Count number servlet </a> <br>
 <a href='login'> Login </a> <br>
+<a href='logout'> Logout </a> <br>
+<a href='homePage'> Home Page </a> <br>
 <a href='registration'> Registration </a> <br>
 </body>
 </html>

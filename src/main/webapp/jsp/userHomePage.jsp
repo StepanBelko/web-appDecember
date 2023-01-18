@@ -1,52 +1,46 @@
-<%@ page import="by.itstep.stpnbelko.homework.model.User" %>
-<%@ page import="by.itstep.stpnbelko.homework.dao.impl.UsersDAO" %>
-<%@ page import="java.util.Set" %>
-<%@ page import="by.itstep.stpnbelko.homework.model.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    //Лучше брать пользователя из сессии или по email из DAO?
-//    String email = request.getParameter("email") ;
-//    User user = new UsersDAO().getByEmail(email);
 
-    User sessionUser = (User) session.getAttribute("user");
-    String email = sessionUser.getEmail();
-    String name = sessionUser.getName();
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-    Set<User> userSet = (Set<User>) request.getAttribute("users");
-%>
 <html>
 <head>
-    <title><%=name%>  HomePage</title>
+    <title>${user.name} HomePage</title>
     <link href="../templates/css/style.css" rel="stylesheet" type="text/css">
     <style>
         body {
             background: #eee; /* цвет фона страницы */
         }
 
-        .table{
+        .table {
             border: 1px solid #eee;
             table-layout: auto;
             width: 100%;
             margin-bottom: 20px;
             border-collapse: collapse;
         }
+
         .table th {
             font-weight: bold;
             padding: 5px;
             background: #efefef;
             border: 1px solid #dddddd;
         }
-        .table td{
+
+        .table td {
             padding: 5px 10px;
             border: 1px solid #eee;
             text-align: left;
         }
-        .table tbody tr:nth-child(odd){
+
+        .table tbody tr:nth-child(odd) {
             background: #fff;
         }
-        .table tbody tr:nth-child(even){
+
+        .table tbody tr:nth-child(even) {
             background: #F7F7F7;
         }
+
         .table caption {
             margin: 0; /* убираем отступы */
             background-color: #282830; /* фон заголовка */
@@ -60,11 +54,9 @@
     </style>
 </head>
 <body>
-<h1><%=name%>  HomePage</h1>
-Session : ID = <%=session.getId()%>, servlet_context = <%=session.getServletContext()%><br>
-User in session : <%=session.getAttribute("user")%>    <br>
-Session user roles : <%=sessionUser.getRole().isEmpty()%>        <br>
-Session user roles size: <%=sessionUser.getRole().size()%>        <br>
+
+<jsp:include page="header.jsp"></jsp:include>
+
 <br>
 <table class="table">
     <caption>Users database</caption>
@@ -73,7 +65,7 @@ Session user roles size: <%=sessionUser.getRole().size()%>        <br>
         <th>Name</th>
         <th>Email</th>
         <th>Password</th>
-        <th>Office Id</th>
+        <th>Office</th>
         <th>Is Active</th>
         <th>Created time</th>
         <th>Last update</th>
@@ -81,56 +73,69 @@ Session user roles size: <%=sessionUser.getRole().size()%>        <br>
         <th>Action</th>
     </tr>
 
-    <%for (User user : userSet) {%>
-    <tr>
-        <td><%=user.getId()%></td>
-        <td><%=user.getName()%></td>
-        <td><%=user.getEmail()%></td>
-        <td><%=user.getPassword()%></td>
-        <td><%=user.getOffice_id()%></td>
-        <td><%=user.is_active()%></td>
-        <td><%=user.getCreated_ts()%></td>
-        <td><%=user.getUpdated_ts()%></td>
-        <td><%if (user.getRole().size() >= 1) {%>
-                <%for(Role role : user.getRole()) {%>
-                <a href="<%=role.getName().toLowerCase()%>"><%=role.getName()%></a> <br>
-                <%}%>
-            <%} else {%>
-            <a>NONE</a>
-            <%}%>
-        </td>
-        <td >
-            <% if (!sessionUser.getRole().isEmpty()) {%>
-            <%for (Role role : sessionUser.getRole()) {%>
-            <%if (role.getId() <=2) {%>
-            <form action="update" style="display: inline">
-                <button>Update</button>
-            </form>
-            <%}%>
-            <%if (role.getId() <=1) {%>
-            <form action="delete" style="display: inline" method="get">
-                <input name="deleteUserId" value="<%=user.getId()%>" hidden>
-                <input class="btn" type='submit' value='DELETE'>
-            </form>
-            <%}%>
-            <%}%>
-            <%} else {%>
-            <a>NO ACTION FOR CURRENT USER</a>
-            <%}%>
-        </td>
-    </tr>
-    <%}%>
+    <c:forEach var="user" items="${users}">
+        <tr>
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${user.password}</td>
+            <td title="${user.office}">${user.office}</td>
+            <td>как получить boolean поле is_active?</td>
+            <td>${user.created_ts}</td>
+            <td>${user.updated_ts}</td>
+            <td>
+                <c:if test="${fn:length(user.role) >= 1}">
+                    <c:forEach var="role" items="${user.role}">
+                        <a href="${role.name.toLowerCase()}">${role.name}</a> <br>
+                    </c:forEach>
+                </c:if>
+
+                <c:if test="${(fn:length(user.role) < 1)}">
+                    <a>NONE</a>
+                </c:if>
+            </td>
+            <td>
+
+                <c:if test="${(fn:length(userInSession.role) >= 1)}">
+
+                    <c:forEach var="role" items="${userInSession.role}">
+                        <c:if test="${role.id <=2}">
+
+                            <form action="update" style="display: inline">
+                                <button>Update</button>
+                            </form>
+                        </c:if>
+
+
+                        <c:if test="${role.id <=1}">
+                            <form action="delete" style="display: inline" method="get">
+                                <input name="deleteUserId" value="${user.id}" hidden>
+                                <input class="btn" type='submit' value='DELETE'>
+                            </form>
+                        </c:if>
+
+
+                    </c:forEach>
+
+                </c:if>
+                <c:if test="${fn:length(userInSession.role) < 1}">
+                    <a>Login for action</a>
+                </c:if>
+            </td>
+        </tr>
+    </c:forEach>
 </table>
 <br>
-<form action="resetPass" target="_self" method="get">
-    <input type='email' id='email' name='email' value="<%=email%>" readonly><br>
-    <button>Reset Password</button>
-</form>
+<c:if test="${user != null}">
+    <form action="resetPass" target="_self" method="get">
+        <input type='email' id='email' name='email' value="${user.email}" readonly><br>
+        <button>Reset Password</button>
+    </form>
+    <form action="logout" target="_blank" method="get">
+        <button>LogOut</button>
+    </form>
+</c:if>
 
-<form action="logout" target="_blank" method="get">
-    <button>LogOut</button>
-</form>
-
-
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

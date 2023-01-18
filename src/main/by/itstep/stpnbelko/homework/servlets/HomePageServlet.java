@@ -22,8 +22,12 @@ public class HomePageServlet extends HttpServlet {
         System.out.println("!!!!!!!!!HomePage servlet doGet");
         HttpSession currentSession = req.getSession();
         User user = (User) currentSession.getAttribute("user");
+//        System.out.println("User in session : " + user.getName());
+
         if (user == null) {
-            req.getRequestDispatcher("login").forward(req, resp);
+            Set<User> usersSet = dao.getAll();  //список всех users для передачи на домашнюю страницу
+            req.setAttribute("users", usersSet);
+            req.getRequestDispatcher("jsp/userHomePage.jsp").forward(req, resp);
         } else {
             doPost(req, resp);
         }
