@@ -19,4 +19,16 @@ public class User {
     private Set<Role> role;
     private Office office;
 
+    public boolean getIs_active() {
+        return is_active;
+    }
+
+    public boolean is_active(){
+        return  is_active;
+    }
+
+    public void setIs_active(boolean b) {
+        this.is_active = b;
+    }
+
 }

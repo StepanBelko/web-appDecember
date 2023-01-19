@@ -38,7 +38,7 @@
 
 <div class="topnav">
     <a class="active" href="http://localhost:8080/web-app/">Home</a>
-    <a href="#news">News</a>
+    <a href="offices">Offices</a>
     <a href="#contact">Contact</a>
     <a href="#about">About</a>
 

@@ -92,4 +92,22 @@
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>OfficesServlet</servlet-name>
+        <servlet-class>by.itstep.stpnbelko.homework.servlets.OfficesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OfficesServlet</servlet-name>
+        <url-pattern>/offices</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreateUserServlet</servlet-name>
+        <servlet-class>by.itstep.stpnbelko.homework.servlets.CreateUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateUserServlet</servlet-name>
+        <url-pattern>/createUser</url-pattern>
+    </servlet-mapping>
+
 </web-app>

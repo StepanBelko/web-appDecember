@@ -80,18 +80,18 @@
             <td>${user.email}</td>
             <td>${user.password}</td>
             <td title="${user.office}">${user.office}</td>
-            <td>как получить boolean поле is_active?</td>
+            <td>${user.is_active}</td>
             <td>${user.created_ts}</td>
             <td>${user.updated_ts}</td>
             <td>
                 <c:if test="${fn:length(user.role) >= 1}">
                     <c:forEach var="role" items="${user.role}">
-                        <a href="${role.name.toLowerCase()}">${role.name}</a> <br>
+                        <a style="color: blue" href="${role.name.toLowerCase()}">${role.name}</a> <br>
                     </c:forEach>
                 </c:if>
 
                 <c:if test="${(fn:length(user.role) < 1)}">
-                    <a>NONE</a>
+                    <a style="color: black">NONE</a>
                 </c:if>
             </td>
             <td>
@@ -119,7 +119,7 @@
 
                 </c:if>
                 <c:if test="${fn:length(userInSession.role) < 1}">
-                    <a>Login for action</a>
+                    <a style="color: black">Login for action</a>
                 </c:if>
             </td>
         </tr>
@@ -135,6 +135,11 @@
         <button>LogOut</button>
     </form>
 </c:if>
+
+
+<form action="createUser" target="_self" method="get">
+    <button>Create User</button>
+</form>
 
 <jsp:include page="footer.jsp"></jsp:include>
 </body>

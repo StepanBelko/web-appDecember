@@ -87,7 +87,7 @@ public class UsersDAO extends AbstractDAO<User> {
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
                 user.setOffice_id(resultSet.getInt("Office_id"));
-                user.set_active(resultSet.getBoolean("is_active"));
+                user.setIs_active(resultSet.getBoolean("is_active"));
                 user.setCreated_ts(resultSet.getTimestamp("created_ts"));
                 user.setUpdated_ts(resultSet.getTimestamp("updated_ts"));
 
@@ -134,8 +134,8 @@ public class UsersDAO extends AbstractDAO<User> {
     public Set<User> getAll() {
 
         String sql = "SELECT u.id as User_id, u.name as User_name, u.email, u.password, u.is_active, u.created_ts, u.updated_ts, o.id as Office_id, o.name as Office_name, o.location, o.phone, o.fax \n" +
-                "FROM users.users u \n" +
-                "JOIN  offices o \n" +
+                "FROM users.users u " +
+                "JOIN  offices o " +
                 "ON u.office_id = o.id";
         Set userList = new LinkedHashSet<User>();
 
@@ -152,7 +152,7 @@ public class UsersDAO extends AbstractDAO<User> {
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
                 user.setOffice_id(resultSet.getInt("office_id"));
-                user.set_active(resultSet.getBoolean("is_active"));
+                user.setIs_active(resultSet.getBoolean("is_active"));
                 user.setCreated_ts(resultSet.getTimestamp("created_ts"));
                 user.setUpdated_ts(resultSet.getTimestamp("updated_ts"));
 
@@ -197,7 +197,7 @@ public class UsersDAO extends AbstractDAO<User> {
                 user.setEmail(email);
                 user.setPassword(resultSet.getString("password"));
                 user.setOffice_id(resultSet.getInt("office_id"));
-                user.set_active(resultSet.getBoolean("is_active"));
+                user.setIs_active(resultSet.getBoolean("is_active"));
                 user.setCreated_ts(resultSet.getTimestamp("created_ts"));
                 user.setUpdated_ts(resultSet.getTimestamp("updated_ts"));
 
@@ -301,6 +301,6 @@ public class UsersDAO extends AbstractDAO<User> {
 
 
     public static void main(String[] args) {
-        System.out.println(new UsersDAO().getByEmail("Stpn.belko@rambler.ru"));
+        System.out.println(new UsersDAO().getAll());
     }
 }

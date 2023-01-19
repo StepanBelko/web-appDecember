@@ -39,7 +39,7 @@ public class HomePageServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         User user = (User) session.getAttribute("user"); //берём пользователя из сессии
-        System.out.println("User in session : " + user.getName());
+//        System.out.println("User in session : " + user.getName());
 
         Set<User> usersSet = dao.getAll();  //список всех users для передачи на домашнюю страницу
         req.setAttribute("users", usersSet);

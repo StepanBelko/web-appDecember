@@ -37,7 +37,7 @@ public class OfficesDAO extends AbstractDAO<Office> {
     @Override
     public Set<Office> getAll() {
         String sql = "SELECT * FROM users.offices ORDER BY id";
-        Set officesList = new LinkedHashSet<User>();
+        Set<Office> officesList = new LinkedHashSet<>();
 
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
