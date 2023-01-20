@@ -81,7 +81,7 @@
             <td>${user.name}</td>
             <td>${user.email}</td>
             <td>${user.password}</td>
-            <td><a href="viewOffice?id=${user.office.id}">view details</a></td>
+            <td><a href="offices?id=${user.office.id}">view details</a></td>
             <td><a>${user.is_active ? "Active" : "-"}</a></td>
             <td>${user.created_ts}</td>
             <td>${user.updated_ts}</td>

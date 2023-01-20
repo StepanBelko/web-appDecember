@@ -31,6 +31,11 @@ public class OfficesDAO extends AbstractDAO<Office> {
     }
 
     @Override
+    public boolean delete(Office office) {
+        return false;
+    }
+
+    @Override
     public Office getById(int id) {
 
         String sql = "SELECT * FROM users.offices WHERE id = ?";

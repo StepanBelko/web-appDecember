@@ -87,6 +87,24 @@ public class UsersDAO extends AbstractDAO<User> {
     }
 
     @Override
+    public boolean delete(User user) {
+        String sql = "DELETE FROM `users`.`users` WHERE (`id` = ?)";
+
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setInt(1, user.getId());
+            if (preparedStatement.executeUpdate() == 1)
+                return true;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    @Override
     public User getById(int id) {
 
         String sql = "SELECT u.id as User_id, u.name as User_name, u.email, u.password, u.is_active, u.created_ts, u.updated_ts, " +

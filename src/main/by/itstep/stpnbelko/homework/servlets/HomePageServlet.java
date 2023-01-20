@@ -35,7 +35,7 @@ public class HomePageServlet extends HttpServlet {
         if (action != null) {
             switch (action) {
                 case "Crt":
-                    
+
                     req.setAttribute("offices", new OfficesDAO().getAll());
                     System.out.println("Create branch");
                     req.getRequestDispatcher("jsp/createUser.jsp").forward(req, resp);
@@ -54,7 +54,13 @@ public class HomePageServlet extends HttpServlet {
                     return;
 
                 case "Del":
-                    //вы уверены?
+                    System.out.println("Delete branch");
+                    System.out.println("userId from parameter = " + req.getParameter("userId"));
+                    User userToDelete = dao.getById(Integer.parseInt(req.getParameter("userId")));
+                    req.setAttribute("userToDelete", userToDelete);
+                    System.out.println("User to delete user : " + userToDelete);
+
+                    req.getRequestDispatcher("jsp/confirmation.jsp").forward(req, resp);
                     return;
             }
         }
@@ -99,6 +105,16 @@ public class HomePageServlet extends HttpServlet {
             newUser.setIs_active(Boolean.parseBoolean(req.getParameter("is_active")));
 
             dao.update(newUser);
+        } else if (action != null && action.equals("Del")) {
+            System.out.println("delete branch doPost");
+            int userId = Integer.parseInt(req.getParameter("userId"));
+            User userToDelete = dao.getById(userId);
+//            dao.delete(userToDelete);
+
+            req.setAttribute("userToDelete", userToDelete);
+            dao.delete(userId);
+            req.getRequestDispatcher("jsp/deleteWindow.jsp").forward(req,resp);
+
         }
 
         Set<User> usersSet = dao.getAll();  //список всех users для передачи на домашнюю страницу

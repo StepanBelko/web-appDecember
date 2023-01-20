@@ -13,7 +13,7 @@
 <div class="MyForm" style="height: 250px">
     <h1>Delete user</h1>
     <div class="inp">
-        <a>User <%=user.getName()%> successfully deleted</a>
+        <a>User ${userToDelete.name} successfully deleted</a>
             <br>
         <br>
         <br>

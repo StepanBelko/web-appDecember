@@ -30,6 +30,11 @@ public class RolesDAO extends AbstractDAO<Role> {
     }
 
     @Override
+    public boolean delete(Role role) {
+        return false;
+    }
+
+    @Override
     public Role getById(int id) {
         String sql = "SELECT * FROM roles WHERE roles.id = ?";
         Role role = null;

@@ -10,6 +10,8 @@ public abstract class AbstractDAO<T> {
 
     public abstract boolean delete(int id);
 
+    public abstract boolean delete(T t);
+
     public abstract T getById(int id);
 
     public abstract Set<T> getAll();
