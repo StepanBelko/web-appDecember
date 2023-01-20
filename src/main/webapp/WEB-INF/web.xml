@@ -110,4 +110,13 @@
         <url-pattern>/createUser</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RolesServlet</servlet-name>
+        <servlet-class>by.itstep.stpnbelko.homework.servlets.RolesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RolesServlet</servlet-name>
+        <url-pattern>/roles</url-pattern>
+    </servlet-mapping>
+
 </web-app>

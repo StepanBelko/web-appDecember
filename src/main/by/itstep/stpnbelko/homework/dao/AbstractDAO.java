@@ -13,4 +13,5 @@ public abstract class AbstractDAO<T> {
     public abstract T getById(int id);
 
     public abstract Set<T> getAll();
+
 }

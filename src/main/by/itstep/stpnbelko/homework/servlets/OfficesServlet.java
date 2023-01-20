@@ -18,6 +18,7 @@ public class OfficesServlet extends HttpServlet {
         System.out.println("Offices servlet doGET");
         Set<Office> offices = new OfficesDAO().getAll();
         req.setAttribute("offices", offices);
+
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/offices.jsp");
 
 

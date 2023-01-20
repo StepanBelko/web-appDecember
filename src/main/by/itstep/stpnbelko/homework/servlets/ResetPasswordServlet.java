@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.decrypt;
+
 
 public class ResetPasswordServlet extends HttpServlet {
     @Override
@@ -33,7 +35,7 @@ public class ResetPasswordServlet extends HttpServlet {
         User user = new UsersDAO().getByEmail(email);
 
         if (user != null) {
-            if (oldPass.equals(user.getPassword())) {
+            if (oldPass.equals(decrypt(user.getPassword()))) {
                 if (newPass.equals(newPass2)) {
                     if (new UsersDAO().changePassWord(email, newPass)) {
                         resp.getWriter().println("Password successfully changed");

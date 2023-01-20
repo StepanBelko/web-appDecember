@@ -37,16 +37,17 @@
 <body>
 
 <div class="topnav">
-    <a class="active" href="http://localhost:8080/web-app/">Home</a>
+    <a class="active" href="http://localhost:8080/web-app/">Start page</a>
+    <a href="homePage">Users</a>
     <a href="offices">Offices</a>
-    <a href="#contact">Contact</a>
+    <a href="roles">Roles</a>
     <a href="#about">About</a>
 
     <c:if test="${user == null}">
-        <a style="float: right" href="login">Login</a>
+        <a class="active" style="float: right" href="login">Login</a>
     </c:if>
     <c:if test="${user != null}">
-        <a style="float: right" href="logout">Logout</a>
+        <a class="active" style="float: right" href="logout">Logout</a>
         <a style="float: right">${user.email}</a>
     </c:if>
 

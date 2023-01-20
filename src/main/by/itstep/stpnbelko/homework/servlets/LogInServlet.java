@@ -31,9 +31,11 @@ public class LogInServlet extends HttpServlet {
         resp.setContentType("text/html");
 
         String password = encrypt(req.getParameter("password"));
+        System.out.println("Encrypt password : " + password);
         String email = req.getParameter("email").trim();
 
         User user = new UsersDAO().getByEmail(email);
+        System.out.println("Password from DB : " + user.getPassword());
 
         if (user == null) {
             resp.getWriter().println("<b> User does not exist </b >");
@@ -42,11 +44,9 @@ public class LogInServlet extends HttpServlet {
         } else if (password.equals(user.getPassword()) && user.is_active()) {
 
             HttpSession session = req.getSession();
-            session.setMaxInactiveInterval(60);
+            session.setMaxInactiveInterval(360);
             ServletUtils.saveSessionUser(req, user);
-
-
-//            resp.getWriter().println("<b>Welcome from login servlet, </b>" + user.getName() + ", " + user.getEmail() + "<br>");
+            
             requestDispatcher = req.getRequestDispatcher("homePage");
             requestDispatcher.forward(req, resp);
             return;

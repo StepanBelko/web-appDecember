@@ -5,7 +5,7 @@
 
 <html>
 <head>
-    <title>Users HomePage</title>
+    <title>${user.name} HomePage</title>
     <link href="../templates/css/style.css" rel="stylesheet" type="text/css">
     <style>
         body {
@@ -70,9 +70,7 @@
         <th>Created time</th>
         <th>Last update</th>
         <th>Roles</th>
-
-        <th>Update</th>
-        <th>Delete</th>
+        <th>Action</th>
     </tr>
 
     <c:forEach var="user" items="${users}">
@@ -81,32 +79,68 @@
             <td>${user.name}</td>
             <td>${user.email}</td>
             <td>${user.password}</td>
-            <td><a href="viewOffice?id=${user.office.id}">view details</a></td>
-            <td><a>${user.is_active ? "Active" : "-"}</a></td>
+            <td title="${user.office}">${user.office}</td>
+            <td>${user.is_active}</td>
             <td>${user.created_ts}</td>
             <td>${user.updated_ts}</td>
-            <td><a href="viewRolesList?userId=${user.id}">View roles list</a></td>
-
             <td>
-                <button><a href="homePage?action=Upd&userId=${user.id}">UPD usr:${user.id}</a></button>
+                <c:if test="${fn:length(user.role) >= 1}">
+                    <c:forEach var="role" items="${user.role}">
+                        <a style="color: blue" href="${role.name.toLowerCase()}">${role.name}</a> <br>
+                    </c:forEach>
+                </c:if>
+
+                <c:if test="${(fn:length(user.role) < 1)}">
+                    <a style="color: black">NONE</a>
+                </c:if>
             </td>
             <td>
-                <button><a href="homePage?action=Del&userId=${user.id}">DEL usr:${user.id}</a></button>
-            </td>
 
+                <c:if test="${(fn:length(userInSession.role) >= 1)}">
+
+                    <c:forEach var="role" items="${userInSession.role}">
+                        <c:if test="${role.id <=2}">
+
+                            <form action="update" style="display: inline">
+                                <button>Update</button>
+                            </form>
+                        </c:if>
+
+
+                        <c:if test="${role.id <=1}">
+                            <form action="delete" style="display: inline" method="get">
+                                <input name="deleteUserId" value="${user.id}" hidden>
+                                <input class="btn" type='submit' value='DELETE'>
+                            </form>
+                        </c:if>
+
+
+                    </c:forEach>
+
+                </c:if>
+                <c:if test="${fn:length(userInSession.role) < 1}">
+                    <a style="color: black">Login for action</a>
+                </c:if>
+            </td>
         </tr>
     </c:forEach>
 </table>
 
-<button>
-    <a href="homePage?action=Crt">Create new user</a>
-</button>
-
+<br>
 <c:if test="${user != null}">
-        <button><a href="resetPass">Reset Password for ${user.email}</button>
+    <form action="resetPass" target="_self" method="get">
+        <input type='email' id='email' name='email' value="${user.email}" readonly><br>
+        <button>Reset Password</button>
+    </form>
+    <form action="logout" target="_blank" method="get">
+        <button>LogOut</button>
+    </form>
 </c:if>
 
-<br>
+
+<form action="createUser" target="_self" method="get">
+    <button>Create User</button>
+</form>
 
 <jsp:include page="footer.jsp"></jsp:include>
 </body>

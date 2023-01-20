@@ -1,9 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: skynet
+  Date: 19.01.23
+  Time: 20:45
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Offices</title>
-    <link href="../templates/css/style.css" rel="stylesheet" type="text/css">
+    <title>Roles</title>
     <style>
         body {
             background: #eee; /* цвет фона страницы */
@@ -54,25 +60,22 @@
 <jsp:include page="header.jsp"></jsp:include>
 
 <table class="table">
-    <caption>Offices database</caption>
+    <caption>Roles database</caption>
     <tr>
         <th>id</th>
         <th>Name</th>
-        <th>Location</th>
-        <th>Phone</th>
-        <th>Fax</th>
+        <th>Description</th>
     </tr>
-    <c:forEach var="office" items="${offices}">
+    <c:forEach var="role" items="${roles}">
         <tr>
-            <td>${office.id}</td>
-            <td>${office.name}</td>
-            <td>${office.location}</td>
-            <td>${office.phone}</td>
-            <td>${office.fax}</td>
+            <td>${role.id}</td>
+            <td>${role.name}</td>
+            <td>${role.description}</td>
         </tr>
     </c:forEach>
 
 </table>
+
 
 <jsp:include page="footer.jsp"></jsp:include>
 </body>

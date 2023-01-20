@@ -7,6 +7,7 @@
     grid-gap: 24px;
     justify-items: center;
     margin: auto;
+
   }
 
   @media (min-width: 500px) {
@@ -15,13 +16,13 @@
     }
   }
 
-  a {
+  .myFooterClass a {
     color: white;
     text-decoration: none;
     box-shadow: inset 0 -1px 0 hsla(0, 0%, 100%, 0.4);
   }
 
-  a:hover {
+  .myFooterClass a:hover {
     box-shadow: inset 0 -1.2em 0 hsla(0, 0%, 100%, 0.4);
   }
 
@@ -40,9 +41,10 @@
     display: flex;
     height: 60px;
     width: 100%;
-    background-color: #002a38;
+    background-color: #282830;
     line-height: 1.3;
     font-family: Menlo, monospace;
+    border-radius: 0 0 10px 10px;
   }
 
   @keyframes wave-animation {
