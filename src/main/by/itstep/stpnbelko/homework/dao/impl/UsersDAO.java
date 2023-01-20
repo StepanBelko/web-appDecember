@@ -46,6 +46,7 @@ public class UsersDAO extends AbstractDAO<User> {
 
     @Override
     public boolean update(User user) {
+        
         System.out.println("Update method");
         String sql = "UPDATE users.users SET name = ? , email = ? , password = ? , office_id = ? , updated_ts = CURRENT_TIMESTAMP WHERE (id = ?);";
 

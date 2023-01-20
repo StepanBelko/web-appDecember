@@ -1,5 +1,6 @@
 package by.itstep.stpnbelko.homework.model;
 
+import by.itstep.stpnbelko.homework.dao.impl.RolesDAO;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -31,4 +32,8 @@ public class User {
         this.is_active = b;
     }
 
+    public void setRole(Set<Role> role) {
+        new RolesDAO().setUserRoles(this, role);
+        this.role = role;
+    }
 }

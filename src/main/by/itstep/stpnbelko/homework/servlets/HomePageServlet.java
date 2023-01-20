@@ -1,7 +1,9 @@
 package by.itstep.stpnbelko.homework.servlets;
 
 import by.itstep.stpnbelko.homework.dao.impl.OfficesDAO;
+import by.itstep.stpnbelko.homework.dao.impl.RolesDAO;
 import by.itstep.stpnbelko.homework.dao.impl.UsersDAO;
+import by.itstep.stpnbelko.homework.model.Role;
 import by.itstep.stpnbelko.homework.model.User;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.encrypt;
@@ -50,6 +53,7 @@ public class HomePageServlet extends HttpServlet {
                     System.out.println("Updated user : " + updatedUser);
 
                     req.setAttribute("offices", new OfficesDAO().getAll());
+                    req.setAttribute("roles", new RolesDAO().getAll());
                     req.getRequestDispatcher("jsp/update.jsp").forward(req, resp);
                     return;
 
@@ -104,6 +108,24 @@ public class HomePageServlet extends HttpServlet {
             newUser.setOffice(new OfficesDAO().getById(officeId));
             newUser.setIs_active(Boolean.parseBoolean(req.getParameter("is_active")));
 
+//            get roles_id[] from parameter
+            String[] roles = req.getParameterValues("role_id");
+
+//            create empty roleSet
+            Set<Role> roleSet = new LinkedHashSet<>();
+
+//            add roles to roleSet
+            if (roles != null) {
+                RolesDAO rolesDAO = new RolesDAO();
+                for (int i = 0; i < roles.length; i++) {
+                    roleSet.add(rolesDAO.getById(Integer.parseInt(roles[i])));
+                }
+            }
+/*//            как вообще правильно делать update когда используется many to many?
+//            add roleSet to DB
+            rolesDAO.setUserRoles(newUser, roleSet);
+//            add roleSet to user*/
+            newUser.setRole(roleSet);
             dao.update(newUser);
         } else if (action != null && action.equals("Del")) {
             System.out.println("delete branch doPost");
@@ -113,7 +135,7 @@ public class HomePageServlet extends HttpServlet {
 
             req.setAttribute("userToDelete", userToDelete);
             dao.delete(userId);
-            req.getRequestDispatcher("jsp/deleteWindow.jsp").forward(req,resp);
+            req.getRequestDispatcher("jsp/deleteWindow.jsp").forward(req, resp);
 
         }
 

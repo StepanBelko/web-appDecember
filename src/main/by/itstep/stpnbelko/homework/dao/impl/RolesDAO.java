@@ -110,6 +110,35 @@ public class RolesDAO extends AbstractDAO<Role> {
         return usersRoles;
     }
 
+    public boolean setUserRoles(User user, Set<Role> roleSet) {
+        String deleteSql = "DELETE FROM users.users_roles WHERE (user_id = ?)";
+        String sql = "INSERT INTO `users`.`users_roles` (`user_id`, `role_id`) VALUES (?, ?)";
+        int i = 0;
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             PreparedStatement deletePreparedStatement = connection.prepareStatement(deleteSql)) {
+
+            deletePreparedStatement.setInt(1, user.getId());
+            preparedStatement.setInt(1, user.getId());
+
+            deletePreparedStatement.execute();
+            if (roleSet != null) {
+                for (Role role : roleSet) {
+                    preparedStatement.setInt(2, role.getId());
+                    preparedStatement.execute();
+                    i++;
+                }
+                System.out.println("successfully added " + roleSet.size() + "roles to " + user.getName());
+            } else {
+                System.out.println("successfully clear all user " + user.getName() + " roles");
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String[] args) {
 
         System.out.println(new RolesDAO().getAll());

@@ -85,7 +85,15 @@
             <td><a>${user.is_active ? "Active" : "-"}</a></td>
             <td>${user.created_ts}</td>
             <td>${user.updated_ts}</td>
-            <td><a href="viewRolesList?userId=${user.id}">View roles list</a></td>
+            <td>
+                <c:if test="${fn:length(user.role) != 0}">
+                    <a href="roles?userId=${user.id}">View roles list</a>
+                </c:if>
+                <c:if test="${fn:length(user.role) == 0}">
+                    <a>-</a>
+                </c:if>
+
+            </td>
 
             <td>
                 <button><a href="homePage?action=Upd&userId=${user.id}">UPD usr:${user.id}</a></button>
@@ -103,7 +111,7 @@
 </button>
 
 <c:if test="${user != null}">
-        <button><a href="resetPass">Reset Password for ${user.email}</button>
+    <button><a href="resetPass">Reset Password for ${user.email}</a></button>
 </c:if>
 
 <br>
