@@ -28,6 +28,14 @@ Offices List : ${offices}
                     <option value="${office.id}" ${office.id == 1 ? 'selected' : ''}>${office.location}</option>
                 </c:forEach>
             </select> <br><br>
+            <c:forEach var="role" items="${roles}">
+                <input name="role_id"
+                <c:forEach var="usrRole" items="${updatedUser.role}">
+                    ${usrRole.id == role.id ? 'checked' : ''}
+                </c:forEach> type="checkbox" value="${role.id}" id="roleId">
+                <label for="roleId">${role.name}</label> <br>
+            </c:forEach>
+            <br>
             <label for="is_active">Is active</label>
             <input type="checkbox" id='is_active' name='is_active' value="true">
             <br><br>

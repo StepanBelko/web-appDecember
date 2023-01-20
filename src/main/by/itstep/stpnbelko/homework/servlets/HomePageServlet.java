@@ -40,6 +40,7 @@ public class HomePageServlet extends HttpServlet {
                 case "Crt":
 
                     req.setAttribute("offices", new OfficesDAO().getAll());
+                    req.setAttribute("roles", new RolesDAO().getAll());
                     System.out.println("Create branch");
                     req.getRequestDispatcher("jsp/createUser.jsp").forward(req, resp);
                     return;
@@ -86,14 +87,29 @@ public class HomePageServlet extends HttpServlet {
         if (action != null && action.equals("Crt")) {
             User newUser = new User();
 
+            String[] roles = req.getParameterValues("role_id");
+
+            Set<Role> roleSet = new LinkedHashSet<>();
+
+            if (roles != null) {
+                RolesDAO rolesDAO = new RolesDAO();
+                for (int i = 0; i < roles.length; i++) {
+                    roleSet.add(rolesDAO.getById(Integer.parseInt(roles[i])));
+                }
+            }
+
+
             int officeId = Integer.parseInt(req.getParameter("office_id"));
             newUser.setName(req.getParameter("name"));
             newUser.setEmail(req.getParameter("email"));
             newUser.setPassword(encrypt(req.getParameter("password")));
             newUser.setOffice(new OfficesDAO().getById(officeId));
             newUser.setIs_active(Boolean.parseBoolean(req.getParameter("is_active")));
-
+            
             dao.insert(newUser);
+            newUser = dao.getByEmail(newUser.getEmail());
+            System.out.println("NEW USER ID = " + newUser.getId());
+            newUser.setRole(roleSet);
 
         } else if (action != null && action.equals("Upd")) {
 
