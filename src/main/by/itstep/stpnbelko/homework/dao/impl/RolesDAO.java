@@ -111,6 +111,35 @@ public class RolesDAO extends AbstractDAO<Role> {
     }
 
     public boolean setUserRoles(User user, Set<Role> roleSet) {
+        System.out.println("RoleSet size : " + roleSet.size());
+//        String deleteSql = "DELETE FROM users.users_roles WHERE (user_id = ?)";
+        String sql = "INSERT INTO `users`.`users_roles` (`user_id`, `role_id`) VALUES (?, ?)";
+
+        try (Connection connection = DBUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             /*PreparedStatement deletePreparedStatement = connection.prepareStatement(deleteSql)*/) {
+
+//            deletePreparedStatement.setInt(1, user.getId());
+            preparedStatement.setInt(1, user.getId());
+
+//            deletePreparedStatement.execute();
+            if (roleSet != null) {
+                for (Role role : roleSet) {
+                    preparedStatement.setInt(2, role.getId());
+                    preparedStatement.execute();
+                }
+                System.out.println("successfully added " + roleSet.size() + "roles to " + user.getName());
+            } else {
+                System.out.println("successfully clear all user " + user.getName() + " roles");
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean updateUserRoles(User user, Set<Role> roleSet) {
         String deleteSql = "DELETE FROM users.users_roles WHERE (user_id = ?)";
         String sql = "INSERT INTO `users`.`users_roles` (`user_id`, `role_id`) VALUES (?, ?)";
 
@@ -127,7 +156,7 @@ public class RolesDAO extends AbstractDAO<Role> {
                     preparedStatement.setInt(2, role.getId());
                     preparedStatement.execute();
                 }
-                System.out.println("successfully added " + roleSet.size() + "roles to " + user.getName());
+                System.out.println("successfully updated " + roleSet.size() + "roles to " + user.getName());
             } else {
                 System.out.println("successfully clear all user " + user.getName() + " roles");
             }

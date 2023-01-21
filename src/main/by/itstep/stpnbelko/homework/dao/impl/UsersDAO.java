@@ -15,7 +15,6 @@ public class UsersDAO extends AbstractDAO<User> {
     private static final int DEFAULT_OFFICE_ID = 1;
     private static final int DEFAULT_ROLE_ID = 4;
 
-//    private static String COLUMNS = " u.id, u.name, u.email, u.password, u.is_active, u.created_ts, u.updated_ts, o.id, o.location, o.phone, o.fax FROM users.users u JOIN  offices o ON u.office_id = o.id and u.email = ?"
 
     @Override
     public boolean insert(User user) {
@@ -40,6 +39,9 @@ public class UsersDAO extends AbstractDAO<User> {
         } finally {
             DBUtil.release(connection, null, preparedStatement, null);
         }
+
+//        только для того чтобы у user появился id после того как мы его вставили в таблицу
+        new RolesDAO().setUserRoles(this.getByEmail(user.getEmail()), user.getRole());
 
         return false;
     }
@@ -66,7 +68,8 @@ public class UsersDAO extends AbstractDAO<User> {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-        return false;
+        new RolesDAO().updateUserRoles(user, user.getRole());
+        return true;
     }
 
     @Override

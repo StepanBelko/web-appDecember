@@ -1,6 +1,10 @@
 package by.itstep.stpnbelko.homework.servlets;
 
+import by.itstep.stpnbelko.homework.dao.impl.OfficesDAO;
+import by.itstep.stpnbelko.homework.dao.impl.RolesDAO;
 import by.itstep.stpnbelko.homework.dao.impl.UsersDAO;
+import by.itstep.stpnbelko.homework.model.Office;
+import by.itstep.stpnbelko.homework.model.Role;
 import by.itstep.stpnbelko.homework.model.User;
 import by.itstep.stpnbelko.homework.util.IOUtils;
 import by.itstep.stpnbelko.homework.util.MailUtils;
@@ -13,12 +17,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 import java.io.IOException;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.*;
 
 
 public class RegistrationServlet extends HttpServlet {
-    static int i = 0;
+
+    private static final int DEFAULT_ROLE_ID = 4;
+    private static final int DEFAULT_OFFICE_ID = 1;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,7 +44,6 @@ public class RegistrationServlet extends HttpServlet {
         String pwd2 = encrypt(req.getParameter("password2"));
 
         User user = new UsersDAO().getByEmail(email);
-        System.out.println(new UsersDAO().getByEmail(email));
 
         if (user == null) {
 
@@ -45,9 +52,13 @@ public class RegistrationServlet extends HttpServlet {
                 user.setName(name);
                 user.setEmail(email);
                 user.setPassword(pwd1);
-                new UsersDAO().insert(user);
 
-                System.out.println(email);
+                Set<Role> roleSet = new LinkedHashSet<>();
+                roleSet.add(new RolesDAO().getById(DEFAULT_ROLE_ID));
+                user.setRole(roleSet);
+
+                user.setOffice(new OfficesDAO().getById(DEFAULT_OFFICE_ID));
+                new UsersDAO().insert(user);
 
                 // send message
                 String content = IOUtils.readFileBuff("/Users/skynet/IdeaProjects/web-appDecember/src/main/webapp/templates/activate.html");

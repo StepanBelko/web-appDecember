@@ -23,21 +23,20 @@
 <a>Updated user : ${updatedUser}</a> <br>
 <a>Offices list : ${offices}</a>
 
-<div class="MyForm" style="height: 325px">
+<div class="MyForm" style="height: auto">
     <h1>Update user</h1>
     <div class="inp">
         <form action='homePage?action=Upd&userId=${updatedUser.id}' method="post">
-            <input class="inputUp" type='text' id='name' name='name' placeholder="${updatedUser.name}" required><br>
-            <input class="inputMiddle" type='email' id='email' name='email' placeholder="${updatedUser.email}" required><br>
-            <input class="inputMiddle" type='password' id='password' name='password'
-                   placeholder="${updatedUser.password}" required>
+            <input class="inputUp" type='text' id='name' name='name' value="${updatedUser.name} " мrequired><br>
+            <input class="inputMiddle" type='email' id='email' name='email' value="${updatedUser.email}" required><br>
+            <input class="inputMiddle" type='text' id='password' name='password'
+                   value="${updatedUser.password}" required>
             <select class="inputDown" name="office_id" required="required">
                 <c:forEach var="office" items="${offices}">
                     <option value="${office.id}" ${office.id == updatedUser.office_id ? 'selected' : ''}>${office.location}</option>
                 </c:forEach>
             </select> <br><br>
 
-            <%--      <select class="inputDown" name="role_id" required="required">--%>
             <c:forEach var="role" items="${roles}">
                 <input name="role_id"
                 <c:forEach var="usrRole" items="${updatedUser.role}">

@@ -29,10 +29,7 @@ Offices List : ${offices}
                 </c:forEach>
             </select> <br><br>
             <c:forEach var="role" items="${roles}">
-                <input name="role_id"
-                <c:forEach var="usrRole" items="${updatedUser.role}">
-                    ${usrRole.id == role.id ? 'checked' : ''}
-                </c:forEach> type="checkbox" value="${role.id}" id="roleId">
+                <input name="role_id" ${role.id == 4? 'checked' : ''} type="checkbox" value="${role.id}" id="roleId">
                 <label for="roleId">${role.name}</label> <br>
             </c:forEach>
             <br>

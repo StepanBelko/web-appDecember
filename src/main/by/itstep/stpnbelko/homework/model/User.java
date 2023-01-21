@@ -24,8 +24,8 @@ public class User {
         return is_active;
     }
 
-    public boolean is_active(){
-        return  is_active;
+    public boolean is_active() {
+        return is_active;
     }
 
     public void setIs_active(boolean b) {
@@ -33,7 +33,10 @@ public class User {
     }
 
     public void setRole(Set<Role> role) {
-        new RolesDAO().setUserRoles(this, role);
         this.role = role;
+    }
+
+    public void addRoleToSet(Role role) {
+        this.getRole().add(role);
     }
 }

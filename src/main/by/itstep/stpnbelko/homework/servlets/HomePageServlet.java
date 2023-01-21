@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.decrypt;
 import static by.itstep.stpnbelko.homework.util.EncryptDecrypt.encrypt;
 
 
@@ -50,6 +51,7 @@ public class HomePageServlet extends HttpServlet {
                     System.out.println("Update branch");
                     System.out.println("userId from parameter = " + req.getParameter("userId"));
                     User updatedUser = dao.getById(Integer.parseInt(req.getParameter("userId")));
+                    updatedUser.setPassword(decrypt(updatedUser.getPassword()));
                     req.setAttribute("updatedUser", updatedUser);
                     System.out.println("Updated user : " + updatedUser);
 
@@ -84,6 +86,8 @@ public class HomePageServlet extends HttpServlet {
 
         System.out.println("Action = " + action);
 
+
+//        Создание
         if (action != null && action.equals("Crt")) {
             User newUser = new User();
 
@@ -98,51 +102,52 @@ public class HomePageServlet extends HttpServlet {
                 }
             }
 
-
             int officeId = Integer.parseInt(req.getParameter("office_id"));
             newUser.setName(req.getParameter("name"));
             newUser.setEmail(req.getParameter("email"));
             newUser.setPassword(encrypt(req.getParameter("password")));
             newUser.setOffice(new OfficesDAO().getById(officeId));
             newUser.setIs_active(Boolean.parseBoolean(req.getParameter("is_active")));
-            
-            dao.insert(newUser);
-            newUser = dao.getByEmail(newUser.getEmail());
-            System.out.println("NEW USER ID = " + newUser.getId());
             newUser.setRole(roleSet);
 
+            dao.insert(newUser);
+//            newUser = dao.getByEmail(newUser.getEmail());
+//            костыль!!! приходится так делать, чтобы взять сгенерированный userId,
+//            ибо пока мы не вставили в таблицу users пользователя мы не можем
+//            вставлять данные в таблицу users_roles
+
+
+
+//            Апдейт
         } else if (action != null && action.equals("Upd")) {
-
-            User newUser = new User();
-
+            String[] roles = req.getParameterValues("role_id");
+            Set<Role> roleSet = new LinkedHashSet<>();
             int officeId = Integer.parseInt(req.getParameter("office_id"));
 
-            newUser.setId(Integer.parseInt(req.getParameter("userId")));
-            newUser.setName(req.getParameter("name"));
-            newUser.setEmail(req.getParameter("email"));
-            newUser.setPassword(encrypt(req.getParameter("password")));
-            newUser.setOffice(new OfficesDAO().getById(officeId));
-            newUser.setIs_active(Boolean.parseBoolean(req.getParameter("is_active")));
-
-//            get roles_id[] from parameter
-            String[] roles = req.getParameterValues("role_id");
-
-//            create empty roleSet
-            Set<Role> roleSet = new LinkedHashSet<>();
-
-//            add roles to roleSet
             if (roles != null) {
                 RolesDAO rolesDAO = new RolesDAO();
                 for (int i = 0; i < roles.length; i++) {
                     roleSet.add(rolesDAO.getById(Integer.parseInt(roles[i])));
                 }
             }
+
+            User newUser = new User();
+            newUser.setId(Integer.parseInt(req.getParameter("userId")));
+            newUser.setName(req.getParameter("name"));
+            newUser.setEmail(req.getParameter("email"));
+            newUser.setPassword(encrypt(req.getParameter("password")));
+            newUser.setOffice(new OfficesDAO().getById(officeId));
+            newUser.setIs_active(Boolean.parseBoolean(req.getParameter("is_active")));
+            newUser.setRole(roleSet);
+            dao.update(newUser);
 /*//            как вообще правильно делать update когда используется many to many?
 //            add roleSet to DB
             rolesDAO.setUserRoles(newUser, roleSet);
 //            add roleSet to user*/
-            newUser.setRole(roleSet);
-            dao.update(newUser);
+
+
+
+//            удаление
         } else if (action != null && action.equals("Del")) {
             System.out.println("delete branch doPost");
             int userId = Integer.parseInt(req.getParameter("userId"));
