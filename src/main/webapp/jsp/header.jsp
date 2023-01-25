@@ -40,8 +40,7 @@
     <a class="active" href="http://localhost:8080/web-app/">Start page</a>
     <a href="homePage">Users</a>
     <a href="offices">Offices</a>
-    <a href="roles">Roles</a>
-    <a href="#about">About</a>
+    <a href="roles">Roles</a>QL ;
 
     <c:if test="${user == null}">
         <a class="active" style="float: right" href="login">Login</a>

@@ -13,11 +13,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
-
-import static by.itstep.stpnbelko.homework.util.ServletUtils.USER;
-import static by.itstep.stpnbelko.homework.util.ServletUtils.getRolesMapping;
 
 @WebFilter(filterName = "AuthFilter")
 public class AuthFilter extends HttpFilter {

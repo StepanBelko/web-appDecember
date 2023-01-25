@@ -57,7 +57,7 @@
 
 <jsp:include page="header.jsp"></jsp:include>
 
-<br>
+<br <c:if test="${user != null}">${sessionUserId = user.id}</c:if>>
 <table class="table">
     <caption>Users database</caption>
     <tr>

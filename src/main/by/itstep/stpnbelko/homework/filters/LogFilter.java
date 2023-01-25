@@ -1,23 +1,22 @@
 package by.itstep.stpnbelko.homework.filters;
 
-import by.itstep.stpnbelko.homework.model.User;
-import by.itstep.stpnbelko.homework.util.EncryptDecrypt;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
+
+import org.slf4j.*;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 @WebFilter(filterName = "LogFilter")
 public class LogFilter extends HttpFilter {
+
+    private static final Logger log = LoggerFactory.getLogger(LogFilter.class);
 
 
     private static final String PRINT_PATTERN = "%s : %s [%s] {%s} %s %s %s";
@@ -25,6 +24,7 @@ public class LogFilter extends HttpFilter {
     @Override
     public void init() throws ServletException {
         System.out.println("Init LogFilter");
+        log.info("LOGGER!!!!!!!!!!!!");
     }
 
     @Override
