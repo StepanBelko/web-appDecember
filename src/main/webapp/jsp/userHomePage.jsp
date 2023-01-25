@@ -6,7 +6,7 @@
 <html>
 <head>
     <title>Users HomePage</title>
-    <link href="../templates/css/style.css" rel="stylesheet" type="text/css">
+<%--    <link href="../templates/css/style.css" rel="stylesheet" type="text/css">--%>
     <style>
         body {
             background: #eee; /* цвет фона страницы */
@@ -76,9 +76,9 @@
     </tr>
 
     <c:forEach var="user" items="${users}">
-        <tr>
+        <tr <c:if test="${user.id == sessionUserId}"> style="background: aquamarine" </c:if>>
             <td>${user.id}</td>
-            <td>${user.name}</td>
+            <td> ${user.name}</td>
             <td>${user.email}</td>
             <td>${user.password}</td>
             <td><a href="offices?id=${user.office.id}">view details</a></td>

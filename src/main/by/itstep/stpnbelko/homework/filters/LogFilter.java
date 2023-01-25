@@ -44,6 +44,7 @@ public class LogFilter extends HttpFilter {
 //        logger.info(log);
 
         System.out.println("USER IN FILTER : " + httpReq.getSession().getAttribute("user"));
+        System.out.println("Log FILTER INFO : " + log);
 
         chain.doFilter(req, res);
 

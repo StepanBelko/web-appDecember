@@ -23,7 +23,7 @@ import static by.itstep.stpnbelko.homework.util.ServletUtils.getRolesMapping;
 public class AuthFilter extends HttpFilter {
 
 
-    List<String> allowedPath = Arrays.asList("/login");
+    List<String> allowedPath = Arrays.asList("/jsp/index.jsp", "/welcome", "/login", "/registration");
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -31,36 +31,40 @@ public class AuthFilter extends HttpFilter {
 
         HttpServletRequest httpReq = (HttpServletRequest) req;
         String path = httpReq.getServletPath();
+        System.out.println("Servlet path : " + path);
+        System.out.println("Allowed path : " + allowedPath.toString());
+        User user = ServletUtils.getSessionUser(httpReq);
 
-        if(allowedPath.contains(path)){
+        if (allowedPath.contains(path)) {
             chain.doFilter(req, res);
             return;
         } else {
-            User user = ServletUtils.getSessionUser(httpReq);
             if (user == null) {
-                req.setAttribute("msg", "Please login");
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/msg.jsp");
-                requestDispatcher.forward(httpReq, (HttpServletResponse) res);
+                req.setAttribute("msg", "User == null. Please login");
+                RequestDispatcher rd = req.getRequestDispatcher("jsp/msg.jsp");
+                rd.forward(req, res);
                 return;
             }
         }
 
 
-        Map<Role, List<String>> map = ServletUtils.getRolesMapping();
-        System.out.println("Auth filter map size : " + map.size());
-        User user = (User) httpReq.getAttribute("user");
-        for (Role role : user.getRole()) {
-            List<String> roles = map.get(role);
+        if (user.getRole() == null || user.getRole().size() == 0) {
+            req.setAttribute("msg", "User does not have any role. Please login");
+            RequestDispatcher rd = req.getRequestDispatcher("jsp/msg.jsp");
+            rd.forward(req, res);
+        } else {
+            for (Role role : user.getRole()) {
+                for (String allowedPath : ServletUtils.getRolesMapping().get(role)) {
+                    if (allowedPath.trim().equals(path)) {
+                        chain.doFilter(req, res);
+                        return;
+                    }
+                }
+            }
         }
 
-
-
-
-
-        System.out.println("PATH!!!!!!!!! " + path);
-
-        chain.doFilter(req, res);
-
-
+        req.setAttribute("msg", "You haven't suitable roles" );
+        RequestDispatcher rd = req.getRequestDispatcher("jsp/msg.jsp");
+        rd.forward(req, res);
     }
 }

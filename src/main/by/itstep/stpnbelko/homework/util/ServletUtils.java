@@ -33,7 +33,7 @@ public class ServletUtils {
         Object userObject = session.getAttribute(USER);
 
         if (userObject == null) {
-            System.out.println("No User in session" + session.getId());
+            System.out.println("No User in session : " + session.getId());
             return null;
         } else {
             return (User) userObject;

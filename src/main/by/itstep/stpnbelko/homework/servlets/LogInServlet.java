@@ -20,14 +20,14 @@ public class LogInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("!!!!!!!!!Login servlet doGet");
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("loginPage.html");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/loginPage.jsp");
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("!!!!!!!!!Login servlet doPost");
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("loginPage.html");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/loginPage.jsp");
         resp.setContentType("text/html");
 
         String password = encrypt(req.getParameter("password"));

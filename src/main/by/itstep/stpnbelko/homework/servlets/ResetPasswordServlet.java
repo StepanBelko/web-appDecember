@@ -39,7 +39,7 @@ public class ResetPasswordServlet extends HttpServlet {
                 if (newPass.equals(newPass2)) {
                     if (new UsersDAO().changePassWord(email, newPass)) {
                         resp.getWriter().println("Password successfully changed");
-                        requestDispatcher = req.getRequestDispatcher("loginPage.html");
+                        requestDispatcher = req.getRequestDispatcher("jsp/loginPage.jsp");
                     } else {
                         resp.getWriter().println("Something wrong");
                     }

@@ -30,13 +30,15 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("registrationPage.html");
+        System.out.println("!!!Registration servlet doGet");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/registrationPage.jsp");
         requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("registrationPage.html");
+        System.out.println("!!!Registration servlet doPost");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/registrationPage.jsp");
         resp.setContentType("text/html");
         String name = req.getParameter("name");
         String email = req.getParameter("email");
