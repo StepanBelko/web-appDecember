@@ -31,11 +31,9 @@ public class LogInServlet extends HttpServlet {
         resp.setContentType("text/html");
 
         String password = encrypt(req.getParameter("password"));
-        System.out.println("Encrypt password : " + password);
         String email = req.getParameter("email").trim();
 
         User user = new UsersDAO().getByEmail(email);
-        System.out.println("Password from DB : " + user.getPassword());
 
         if (user == null) {
             resp.getWriter().println("<b> User does not exist </b >");
