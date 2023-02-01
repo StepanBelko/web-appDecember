@@ -41,13 +41,15 @@
             <scope>provided</scope>
         </dependency>
 
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>javax.servlet</groupId>-->
-<!--            <artifactId>javax.servlet-api</artifactId>-->
-<!--            <version>4.0.1</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
+                <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                    <version>4.0.1</version>
+                    <scope>provided</scope>
+                </dependency>
+        
+        
 
         <dependency>
             <groupId>org.glassfish.web</groupId>
@@ -55,21 +57,21 @@
             <version>2.0.0</version>
         </dependency>
 
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet/jstl &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>javax.servlet</groupId>-->
-<!--            <artifactId>jstl</artifactId>-->
-<!--            <version>1.2</version>-->
-<!--        </dependency>-->
+                <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+                <dependency>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>jstl</artifactId>
+                    <version>1.2</version>
+                </dependency>
 
 
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>javax.servlet.jsp</groupId>-->
-<!--            <artifactId>jsp-api</artifactId>-->
-<!--            <version>2.1</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>javax.servlet.jsp</groupId>-->
+        <!--            <artifactId>jsp-api</artifactId>-->
+        <!--            <version>2.1</version>-->
+        <!--            <scope>provided</scope>-->
+        <!--        </dependency>-->
 
 
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -111,10 +113,25 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.19.0</version>
-<!--            <scope>test</scope>-->
+            <!--            <scope>test</scope>-->
         </dependency>
 
 
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.29.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>2.29.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>2.29.1</version>
+        </dependency>
 
 
     </dependencies>

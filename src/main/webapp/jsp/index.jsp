@@ -17,5 +17,20 @@
 <a href='logout'> Logout </a> <br>
 <a href='homePage'> Home Page </a> <br>
 <a href='registration'> Registration </a> <br>
+
+
+
+<p>Modify the text in the input field, then click outside the field to fire the onchange event.</p>
+
+Enter some text: <input type="text" name="txt" value="Hello" onchange="myFunction(this.value)">
+
+<script>
+    function myFunction(val) {
+        alert("The input value has changed. The new value is: " + val);
+    }
+</script>
+
+
+
 </body>
 </html>

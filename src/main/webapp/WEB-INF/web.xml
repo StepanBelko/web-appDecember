@@ -2,17 +2,17 @@
         "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
         "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app  xmlns="http://java.sun.com/xml/ns/javaee"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-          version="3.0">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
 
 
     <welcome-file-list>
         <welcome-file>jsp/index.jsp</welcome-file>
     </welcome-file-list>
 
-    
+
     <servlet>
         <servlet-name>ActivationServlet</servlet-name>
         <servlet-class>by.itstep.stpnbelko.homework.servlets.ActivationServlet</servlet-class>
@@ -101,14 +101,14 @@
         <url-pattern>/offices</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>CreateUserServlet</servlet-name>-->
-<!--        <servlet-class>by.itstep.stpnbelko.homework.servlets.CreateUserServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>CreateUserServlet</servlet-name>-->
-<!--        <url-pattern>/createUser</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <!--    <servlet>-->
+    <!--        <servlet-name>CreateUserServlet</servlet-name>-->
+    <!--        <servlet-class>by.itstep.stpnbelko.homework.servlets.CreateUserServlet</servlet-class>-->
+    <!--    </servlet>-->
+    <!--    <servlet-mapping>-->
+    <!--        <servlet-name>CreateUserServlet</servlet-name>-->
+    <!--        <url-pattern>/createUser</url-pattern>-->
+    <!--    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>RolesServlet</servlet-name>
@@ -120,13 +120,28 @@
     </servlet-mapping>
 
 
-    <filter-mapping>
-        <filter-name>LogFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>AuthFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <servlet>
+        <servlet-name>Jersey REST Servlet</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>by.itstep.stpnbelko.homework</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Jersey REST Servlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+
+<!--    <filter-mapping>-->
+<!--        <filter-name>LogFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>AuthFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
 
 </web-app>

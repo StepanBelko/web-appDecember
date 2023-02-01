@@ -26,8 +26,13 @@ public class AuthFilter extends HttpFilter {
 
         HttpServletRequest httpReq = (HttpServletRequest) req;
         String path = httpReq.getServletPath();
+        String context = httpReq.getContextPath();
+        String url = String.valueOf(httpReq.getRequestURL());
         System.out.println("Servlet path : " + path);
+        System.out.println("Parameter : " + httpReq.getParameter("action"));
         System.out.println("Allowed path : " + allowedPath.toString());
+        System.out.println("Servlet context : " + context);
+        System.out.println("URL : " + url);
         User user = ServletUtils.getSessionUser(httpReq);
 
         if (allowedPath.contains(path)) {
