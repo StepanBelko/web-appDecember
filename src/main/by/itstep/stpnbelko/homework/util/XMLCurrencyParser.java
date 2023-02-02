@@ -3,6 +3,7 @@ package by.itstep.stpnbelko.homework.util;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+//уточнить работает ли javax или нужна jakarta
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
