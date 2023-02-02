@@ -16,9 +16,7 @@ public class CarsDAO {
         cars.add(new Car(2, "OPEL", 52000));
     }
 
-    private CarsDAO() {
-
-    }
+    private CarsDAO() {}
 
     public static CarsDAO getInstance() {
         if (instance == null) {

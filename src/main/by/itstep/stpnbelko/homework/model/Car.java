@@ -22,15 +22,12 @@ public class Car {
     }
 
     public Car(String model, double price) {
-        this.id = id;
         this.model = model;
         this.price = price;
     }
 
     public Car(int id) {
         this.id = id;
-        this.model = model;
-        this.price = price;
     }
 
     public Car() {

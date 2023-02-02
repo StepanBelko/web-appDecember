@@ -22,8 +22,6 @@ public class CarsService {
     @Path("/is-alive")
     @Produces(MediaType.TEXT_PLAIN)
     public String isAlive() {
-
-
         return "Server Time : " + new Date();
     }
 
@@ -42,11 +40,10 @@ public class CarsService {
     @GET
     @Path("/all-xml")
     @Produces(MediaType.APPLICATION_XML)
-    public Response showAllInXml() {
+    public Response showAllInXml(){
         List<Car> all = dao.all();
-        if (all.size() > 0) {
-            GenericEntity<List<Car>> genericEntity = new GenericEntity<List<Car>>(all) {
-            };
+        if(all.size() > 0){
+            GenericEntity<List<Car>> genericEntity = new GenericEntity<List<Car>>(all) { };
 
             return Response.ok(genericEntity).build();
         }
