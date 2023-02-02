@@ -3,17 +3,21 @@ package by.itstep.stpnbelko.homework.rest.ws;
 import by.itstep.stpnbelko.homework.dao.impl.CarsDAO;
 import by.itstep.stpnbelko.homework.model.Car;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+//import javax.ws.rs.*;
+//import javax.ws.rs.core.GenericEntity;
+//import javax.ws.rs.core.MediaType;
+//import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.GenericEntity;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 @Path("/cars")
-public class CarsService {
+public class CarsService extends ServletContainer{
 
     private CarsDAO dao = CarsDAO.getInstance();
 
